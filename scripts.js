@@ -26,5 +26,10 @@ const Gameboard = (() => {
 console.log(Gameboard.getBoard());
 console.log(Gameboard.setMark(1, "X"));
 console.log(Gameboard.setMark(1, "O"));
+console.log(Gameboard.setMark(2, "O"));
 console.log(Gameboard.getBoard());
 Gameboard.consolelogBoard();
+
+const Player = (playerName, playerMark) => {
+  return { playerName, playerMark };
+};
