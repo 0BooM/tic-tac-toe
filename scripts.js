@@ -20,10 +20,17 @@ const Gameboard = (() => {
     }
   };
 
+  resetBoard = () => {
+    for (let i = 0; i < board.length; i++) {
+      board[i] = "-";
+    }
+  };
+
   return {
     getBoard,
     setMark,
     consolelogBoard,
+    resetBoard,
   };
 })();
 
@@ -90,7 +97,13 @@ const GameController = (() => {
     return null;
   };
 
-  return { playRound };
+  const resetGame = () => {
+    Gameboard.resetBoard();
+    isGameover = false;
+    currentPlayer = player1;
+  };
+
+  return { playRound, resetGame };
 })();
 
 const DisplayController = (() => {
@@ -111,8 +124,19 @@ const DisplayController = (() => {
       });
     });
   };
-  return { renderContent, cellListeners };
+
+  let resultDiv = document.querySelector(".game-result");
+  let resetBtn = document.querySelector(".reset-game");
+  const resetListener = () => {
+    resetBtn.addEventListener("click", () => {
+      GameController.resetGame();
+      renderContent();
+      resultDiv.textContent = "RESULT";
+    });
+  };
+  return { renderContent, cellListeners, resetListener };
 })();
 
 DisplayController.renderContent();
 DisplayController.cellListeners();
+DisplayController.resetListener();
