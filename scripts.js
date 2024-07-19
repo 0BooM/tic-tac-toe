@@ -32,6 +32,7 @@ const Player = (name, mark) => {
 };
 
 const GameController = (() => {
+  let resultDiv = document.querySelector(".game-result");
   const player1 = Player("player1", "X");
   const player2 = Player("player2", "O");
   let currentPlayer = player1;
@@ -53,8 +54,8 @@ const GameController = (() => {
         let winner = checkWinner();
         if (winner) {
           isGameover = true;
-          if (winner == "It's a tie!") console.log(winner);
-          else console.log(`The winner is ${winner}!`);
+          if (winner == "It's a tie!") resultDiv.textContent = winner;
+          else resultDiv.textContent = `The winner is ${winner}!`;
         } else {
           currentPlayer = currentPlayer === player1 ? player2 : player1;
         }
