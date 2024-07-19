@@ -39,11 +39,32 @@ const Player = (name, mark) => {
 };
 
 const GameController = (() => {
+  let player1;
+  let player2;
   let resultDiv = document.querySelector(".game-result");
-  const player1 = Player("player1", "X");
-  const player2 = Player("player2", "O");
-  let currentPlayer = player1;
+  const initializePlayers = (() => {
+    let form = document.querySelector(".form");
+    let player1Name = document.querySelector(".player1");
+    let player2Name = document.querySelector(".player2");
+    let submitBtn = document.querySelector(".submit-usernames");
+    submitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (player1Name.value.length > 0 && player2Name.value.length > 0) {
+        player1 = Player(player1Name.value, "X");
+        player2 = Player(player2Name.value, "O");
+        form.remove();
+        currentPlayer = player1;
+        Gameboard.resetBoard();
+      }
+    });
+  })();
+  if (!player1 && !player2) {
+    player1 = Player("player1", "X");
+    player2 = Player("player2", "O");
+  }
+
   let isGameover = false;
+  let currentPlayer = player1;
 
   const playRound = (index) => {
     if (!isGameover) {
@@ -140,3 +161,12 @@ const DisplayController = (() => {
 DisplayController.renderContent();
 DisplayController.cellListeners();
 DisplayController.resetListener();
+
+let player1Name = document.querySelector(".player1");
+let player2Name = document.querySelector(".player2");
+let submitBtn = document.querySelector(".submit-usernames");
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log(player1Name.value);
+  console.log(player2Name.value);
+});
