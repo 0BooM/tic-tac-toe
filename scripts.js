@@ -43,7 +43,11 @@ const GameController = (() => {
       playerMove = prompt(
         `${currentPlayer.name} make your move, pick your place (1-9): `
       );
-      if (Gameboard.setMark(playerMove - 1, currentPlayer.mark) == false) {
+      if (
+        Gameboard.setMark(playerMove - 1, currentPlayer.mark) == false ||
+        playerMove < 1 ||
+        playerMove > 9
+      ) {
       } else {
         Gameboard.setMark(playerMove - 1, currentPlayer.mark);
         if (currentPlayer == player1) currentPlayer = player2;
