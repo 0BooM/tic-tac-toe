@@ -70,3 +70,24 @@ main .game-result {
   font-weight: bold;
   text-align: center;
 }
+
+.reset-game {
+  margin-top: 4rem;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem 3rem;
+  background-color: rgb(253, 71, 71);
+  border: none;
+  border-radius: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+.reset-game:hover {
+  background-color: rgb(253, 43, 43);
+}
+.reset-game:active {
+  background-color: rgb(255, 0, 0);
+}
