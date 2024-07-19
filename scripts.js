@@ -94,5 +94,3 @@ const GameController = (() => {
 
   return { playRound };
 })();
-
-GameController.playRound();
