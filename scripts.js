@@ -12,10 +12,10 @@ const Gameboard = (() => {
   setMark = (index, mark) => {
     if (board[index] == "-") {
       board[index] = mark;
-      console.log(`You placed ${mark} on square number ${index}`);
+      //console.log(`You placed ${mark} on square number ${index}`);
       return true;
     } else {
-      console.log(`${index} square is already marked`);
+      //console.log(`${index} square is already marked`);
       return false;
     }
   };
@@ -36,20 +36,19 @@ const GameController = (() => {
   const player2 = Player("player2", "O");
   let currentPlayer = player1;
   let isGameover = false;
-  let test = 0;
-  const playRound = () => {
-    while (!isGameover) {
-      let playerMove = "";
-      playerMove = prompt(
-        `${currentPlayer.name} make your move, pick your place (1-9): `
-      );
+
+  const playRound = (index) => {
+    if (!isGameover) {
+      playerMove = index;
+      console.log(currentPlayer.mark);
+      console.log(Gameboard.getBoard());
       if (
-        Gameboard.setMark(playerMove - 1, currentPlayer.mark) == false ||
-        playerMove < 1 ||
-        playerMove > 9
+        Gameboard.setMark(playerMove, currentPlayer.mark) == false ||
+        playerMove < 0 ||
+        playerMove > 8
       ) {
       } else {
-        Gameboard.setMark(playerMove - 1, currentPlayer.mark);
+        Gameboard.setMark(playerMove, currentPlayer.mark);
 
         let winner = checkWinner();
         if (winner) {
@@ -60,8 +59,6 @@ const GameController = (() => {
           currentPlayer = currentPlayer === player1 ? player2 : player1;
         }
       }
-      Gameboard.consolelogBoard();
-      test++;
     }
   };
 
@@ -94,3 +91,27 @@ const GameController = (() => {
 
   return { playRound };
 })();
+
+const DisplayController = (() => {
+  let board = document.querySelector(".board");
+  let cells = Array.from(board.querySelectorAll(".cell"));
+  const renderContent = () => {
+    let board = Gameboard.getBoard();
+    cells.forEach((cell, index) => {
+      cell.textContent = board[index];
+    });
+  };
+
+  const cellListeners = () => {
+    cells.forEach((cell, index) => {
+      cell.addEventListener("click", () => {
+        GameController.playRound(index);
+        renderContent();
+      });
+    });
+  };
+  return { renderContent, cellListeners };
+})();
+
+DisplayController.renderContent();
+DisplayController.cellListeners();
