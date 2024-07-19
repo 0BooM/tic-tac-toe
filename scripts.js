@@ -38,7 +38,7 @@ const GameController = (() => {
   let isGameover = false;
   let test = 0;
   const playRound = () => {
-    while (test < 8) {
+    while (!isGameover) {
       let playerMove = "";
       playerMove = prompt(
         `${currentPlayer.name} make your move, pick your place (1-9): `
@@ -50,12 +50,46 @@ const GameController = (() => {
       ) {
       } else {
         Gameboard.setMark(playerMove - 1, currentPlayer.mark);
-        if (currentPlayer == player1) currentPlayer = player2;
-        else currentPlayer = player1;
+
+        let winner = checkWinner();
+        if (winner) {
+          isGameover = true;
+          if (winner == "It's a tie!") console.log(winner);
+          else console.log(`The winner is ${winner}!`);
+        } else {
+          currentPlayer = currentPlayer === player1 ? player2 : player1;
+        }
       }
-      console.log(Gameboard.consolelogBoard());
+      Gameboard.consolelogBoard();
       test++;
     }
+  };
+
+  const checkWinner = () => {
+    const gameboard = Gameboard.getBoard();
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let combination of winningCombinations) {
+      let [a, b, c] = combination;
+      if (
+        gameboard[a] !== "-" &&
+        gameboard[a] == gameboard[b] &&
+        gameboard[a] == gameboard[c]
+      )
+        return currentPlayer.name;
+    }
+
+    if (!gameboard.includes("-")) return `It's a tie!`;
+
+    return null;
   };
 
   return { playRound };
