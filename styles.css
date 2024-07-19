@@ -11,3 +11,54 @@ header h1 {
   text-align: center;
   margin-bottom: 5rem;
 }
+
+.board {
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
+  grid-template-rows: 200px 200px 200px;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.board .cell {
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  font-weight: bold;
+  background-color: #fff;
+  cursor: pointer;
+}
+.cell:hover {
+  background-color: #e0e0e0;
+}
+.cell:active {
+  background-color: #9b9b9b;
+}
+
+.board .left,
+.board .rmargin {
+  border-right: 1px solid black;
+}
+
+.board .right,
+.board .rmargin {
+  border-left: 1px solid black;
+}
+
+.board .top,
+.board .middle {
+  border-bottom: 1px solid black;
+}
+.board .bottom,
+.board .middle {
+  border-top: 1px solid black;
+}
